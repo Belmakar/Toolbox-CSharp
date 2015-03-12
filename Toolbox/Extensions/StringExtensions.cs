@@ -10,23 +10,54 @@ namespace Toolbox.Extensions
 	public static class StringExtensions
 	{
 		#region Public Static Methods
+		public static bool IsNullOrWhitespace(this string value)
+		{
+			return string.IsNullOrWhitespace(value);
+		}
+		
 		public static bool IsNullOrEmpty(this string value)
 		{
-			return (value == null || value.Trim().Length == 0) ? true : false;
+			return string.IsNullOrEmpty(value);
 		}
 
 		// ---------------------------------------------------------------------------------------------------- //
 
 		public static bool IsLowerCase(this string value)
 		{
-			return Regex.IsMatch(value, @"^[a-z]+$");
+			if (string.IsNullOrEmpty(value))
+			{
+				return false;
+			}
+			
+			foreach (char ch in value)
+			{
+				if (!char.IsLower(ch))
+				{
+					return false;
+				}
+			}
+			
+			return true;
 		}
 
 		// ---------------------------------------------------------------------------------------------------- //
 
 		public static bool IsUpperCase(this string value)
 		{
-			return Regex.IsMatch(value, @"^[A-Z]+$");
+			if (string.IsNullOrEmpty(value))
+			{
+				return false;
+			}
+			
+			foreach (char ch in value)
+			{
+				if (!char.IsUpper(ch))
+				{
+					return false;
+				}
+			}
+			
+			return true;
 		}
 
 		// ---------------------------------------------------------------------------------------------------- //
@@ -135,7 +166,7 @@ namespace Toolbox.Extensions
 
 		public static string TrimToNull(this string value)
 		{
-			return (value == null || value.Trim().Length == 0) ? null : value.Trim();
+			return string.IsNullOrWhitespace(value) ? null : value.Trim();
 		}
 		#endregion
 	}
